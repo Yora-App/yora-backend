@@ -1,7 +1,12 @@
 spring:
   application:
     name: yora-backend
+  sql:
+    init:
+      schema-locations: classpath:schema.sql
+      mode: always
   datasource:
     url: "jdbc:postgresql://localhost:5432/postgres"
     username: postgres
     password: example
+    driver-class-name: org.postgresql.Driver
