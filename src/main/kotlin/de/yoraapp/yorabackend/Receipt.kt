@@ -16,6 +16,5 @@ data class Receipt(
     val status: ReceiptStatus,
     val contentType: String?,
     val filePath: String,
-    @Id val id: UUID,
-
+    @Id val id: UUID? = null,
 )

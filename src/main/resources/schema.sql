@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS messages(
 );
 
 CREATE TABLE IF NOT EXISTS receipts(
-    id          UUID         NOT NULL PRIMARY KEY,
-    content_type    VARCHAR         NOT NULL,
-    status      VARCHAR         NOT NULL,
-    file_path        VARCHAR         NOT NULL
+    id              UUID         DEFAULT uuidv4() PRIMARY KEY,
+    content_type    VARCHAR      NOT NULL,
+    status          VARCHAR      NOT NULL,
+    file_path       VARCHAR      NOT NULL
 );

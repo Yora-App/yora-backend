@@ -10,31 +10,23 @@ import java.util.UUID
 @Service
 class ReceiptService(private val db: ReceiptRepository) {
     fun createReceipt(file: MultipartFile): Receipt{
-        val id = UUID.randomUUID()
+
         val contentType = file.contentType
 
         // Create directory to store uploads
         val uploadDir = Paths.get("./uploads")
         Files.createDirectories(uploadDir)
 
-        // Extract file extension
-        val fileExtension = file.originalFilename
-            ?.substringAfterLast(".", "")
-            ?.takeIf { it.isNotEmpty() }
-            ?.let { ".$it" }
-            ?: ""
+        // Create path where to store the uploaded file
+        val destinationPath = uploadDir.resolve(file.originalFilename.toString())
 
-        val filename = id.toString() + fileExtension
-        val destinationPath = uploadDir.resolve(filename)
-
+        // Store uploaded file at the destination
         file.transferTo(destinationPath)
 
         val receipt = Receipt(
             status = ReceiptStatus.UPLOADED,
             contentType = contentType,
-            id = id,
-            filePath = destinationPath.toString()
-
+            filePath = destinationPath.toString(),
         )
 
         return db.save(receipt)
