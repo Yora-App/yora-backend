@@ -1,5 +1,7 @@
 package de.yoraapp.yorabackend
 
+import com.rabbitmq.client.AMQP
+import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
@@ -8,7 +10,7 @@ import java.nio.file.Paths
 import java.util.UUID
 
 @Service
-class ReceiptService(private val db: ReceiptRepository) {
+class ReceiptService(private val db: ReceiptRepository, private val rabbitTemplate: RabbitTemplate) {
     fun createReceipt(file: MultipartFile): Receipt{
 
         val contentType = file.contentType
@@ -28,8 +30,10 @@ class ReceiptService(private val db: ReceiptRepository) {
             contentType = contentType,
             filePath = destinationPath.toString(),
         )
+        val savedReceipt = db.save(receipt)
 
-        return db.save(receipt)
+        rabbitTemplate.convertAndSend("orc_jobs_queue", savedReceipt)
+        return savedReceipt
     }
 
     fun findAllReceipts(): List<Receipt> = db.findAll().toList()
