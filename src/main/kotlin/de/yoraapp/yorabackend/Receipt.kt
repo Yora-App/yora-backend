@@ -2,7 +2,9 @@ package de.yoraapp.yorabackend
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
+import java.time.Instant
 import java.util.UUID
+
 
 enum class ReceiptStatus {
     UPLOADED,
@@ -16,5 +18,6 @@ data class Receipt(
     val status: ReceiptStatus,
     val contentType: String?,
     val filePath: String,
+    val uploadedAt: Instant,
     @Id val id: UUID? = null,
 )

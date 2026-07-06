@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.time.Instant
 import java.util.UUID
 
 @Service
@@ -29,6 +30,7 @@ class ReceiptService(private val db: ReceiptRepository, private val rabbitTempla
             status = ReceiptStatus.UPLOADED,
             contentType = contentType,
             filePath = destinationPath.toString(),
+            uploadedAt = Instant.now()
         )
         val savedReceipt = db.save(receipt)
 

@@ -7,5 +7,6 @@ CREATE TABLE IF NOT EXISTS receipts(
     id              UUID         DEFAULT uuidv4() PRIMARY KEY,
     content_type    VARCHAR      NOT NULL,
     status          VARCHAR      NOT NULL,
-    file_path       VARCHAR      NOT NULL
+    file_path       VARCHAR      NOT NULL,
+    uploaded_at     TIMESTAMPTZ  NOT NULL
 );
