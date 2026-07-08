@@ -20,4 +20,17 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: secure_password
+  garage:
+    image: dxflrs/garage:v2.3.0
+    ports:
+      - 3900:3900 # S3 API
+      - 3903:3903 # Admin API
+    volumes:
+      - ./garage.toml:/etc/garage.toml:ro # where the garage.toml is located
+    environment:
+      GARAGE_DEFAULT_ACCESS_KEY: "68dd215dbffe2a5fbc677e90f502e561"
+      GARAGE_DEFAULT_SECRET_KEY: "2586e10351fa5fd0ebbb183c47024628cec9674f862afbe86551a6d819dd2121"
+      GARAGE_DEFAULT_BUCKET: "receipts"
+    command: ["/garage", "server", "--single-node", "--default-bucket"]
+
 
