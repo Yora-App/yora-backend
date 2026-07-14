@@ -15,3 +15,9 @@ spring:
     username: admin
     host: localhost
     port: 5672
+  garage:
+    endpoint: http://garage:3900
+    region: garage
+    bucket: receipts
+    access-key: 68dd215dbffe2a5fbc677e90f502e561
+    secret-key: 2586e10351fa5fd0ebbb183c47024628cec9674f862afbe86551a6d819dd2121
