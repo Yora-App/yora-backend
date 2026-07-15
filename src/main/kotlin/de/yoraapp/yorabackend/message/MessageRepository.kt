@@ -1,4 +1,4 @@
-package de.yoraapp.yorabackend
+package de.yoraapp.yorabackend.message
 
 import org.springframework.data.repository.CrudRepository
 

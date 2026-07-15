@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS receipts(
     content_type    VARCHAR      NOT NULL,
     status          VARCHAR      NOT NULL,
     file_path       VARCHAR      NOT NULL,
-    uploaded_at     TIMESTAMPTZ  NOT NULL
+    uploaded_at     TIMESTAMPTZ  NOT NULL,
+    s3_storage_id   VARCHAR
 );

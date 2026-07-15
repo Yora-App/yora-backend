@@ -1,4 +1,4 @@
-package de.yoraapp.yorabackend
+package de.yoraapp.yorabackend.receipt
 
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -10,7 +10,7 @@ import java.util.UUID
 
 @Service
 class ReceiptService(private val db: ReceiptRepository, private val receiptJobPublisher: ReceiptJobPublisher) {
-    fun createReceipt(file: MultipartFile): Receipt{
+    fun createReceipt(file: MultipartFile): Receipt {
 
         // Create directory to store uploads
         val uploadDir = Paths.get("./uploads")

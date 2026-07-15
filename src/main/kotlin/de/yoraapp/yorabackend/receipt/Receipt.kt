@@ -1,4 +1,4 @@
-package de.yoraapp.yorabackend
+package de.yoraapp.yorabackend.receipt
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
