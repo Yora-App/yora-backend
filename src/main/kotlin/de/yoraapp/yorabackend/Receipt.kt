@@ -19,5 +19,6 @@ data class Receipt(
     val contentType: String?,
     val filePath: String,
     val uploadedAt: Instant,
+    val s3StorageId: String?,
     @Id val id: UUID? = null,
 )
