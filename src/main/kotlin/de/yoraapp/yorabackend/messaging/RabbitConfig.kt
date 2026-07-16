@@ -1,5 +1,4 @@
-package de.yoraapp.yorabackend
-
+package de.yoraapp.yorabackend.messaging
 
 import org.springframework.amqp.core.Queue
 import org.springframework.amqp.support.converter.JacksonJsonMessageConverter

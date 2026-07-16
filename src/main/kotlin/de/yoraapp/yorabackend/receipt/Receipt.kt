@@ -1,4 +1,4 @@
-package de.yoraapp.yorabackend
+package de.yoraapp.yorabackend.receipt
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
@@ -19,5 +19,6 @@ data class Receipt(
     val contentType: String?,
     val filePath: String,
     val uploadedAt: Instant,
+    val s3StorageId: String?,
     @Id val id: UUID? = null,
 )

@@ -1,8 +1,7 @@
-package de.yoraapp.yorabackend
+package de.yoraapp.yorabackend.message
 
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-
 
 @Service
 class MessageService(private val db: MessageRepository) {

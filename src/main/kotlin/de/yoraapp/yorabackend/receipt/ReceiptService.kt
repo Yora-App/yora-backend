@@ -1,7 +1,5 @@
-package de.yoraapp.yorabackend
+package de.yoraapp.yorabackend.receipt
 
-import com.rabbitmq.client.AMQP
-import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
@@ -11,10 +9,8 @@ import java.time.Instant
 import java.util.UUID
 
 @Service
-class ReceiptService(private val db: ReceiptRepository, private val rabbitTemplate: RabbitTemplate) {
-    fun createReceipt(file: MultipartFile): Receipt{
-
-        val contentType = file.contentType
+class ReceiptService(private val db: ReceiptRepository, private val receiptJobPublisher: ReceiptJobPublisher) {
+    fun createReceipt(file: MultipartFile): Receipt {
 
         // Create directory to store uploads
         val uploadDir = Paths.get("./uploads")
@@ -28,13 +24,15 @@ class ReceiptService(private val db: ReceiptRepository, private val rabbitTempla
 
         val receipt = Receipt(
             status = ReceiptStatus.UPLOADED,
-            contentType = contentType,
+            contentType = file.contentType,
             filePath = destinationPath.toString(),
-            uploadedAt = Instant.now()
+            uploadedAt = Instant.now(),
+            s3StorageId = "placeholder",
         )
         val savedReceipt = db.save(receipt)
 
-        rabbitTemplate.convertAndSend("orc_jobs_queue", savedReceipt)
+        receiptJobPublisher.publish(savedReceipt)
+
         return savedReceipt
     }
 
