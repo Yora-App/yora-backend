@@ -9,6 +9,6 @@ class ReceiptJobPublisher(private val rabbitTemplate: RabbitTemplate) {
     fun publish(receipt: Receipt) {
 
         val messageToSend = ReceiptJobMessage(receipt.id, receipt.s3StorageId)
-        rabbitTemplate.convertAndSend("orc_jobs_queue", messageToSend)
+        rabbitTemplate.convertAndSend("ocr_jobs_queue", messageToSend)
     }
 }
