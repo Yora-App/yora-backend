@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 class RabbitConfig {
 
     @Bean
-    fun orcJobsQueue(): Queue = Queue("orc_jobs_queue")
+    fun orcJobsQueue(): Queue = Queue("ocr_jobs_queue")
 
     @Bean
     fun jsonMessageConverter(): MessageConverter = JacksonJsonMessageConverter()
