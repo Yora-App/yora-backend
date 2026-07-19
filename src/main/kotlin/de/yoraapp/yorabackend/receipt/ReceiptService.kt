@@ -1,5 +1,6 @@
 package de.yoraapp.yorabackend.receipt
 
+import de.yoraapp.yorabackend.messaging.ReceiptJobPublisher
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile

@@ -1,6 +1,6 @@
-package de.yoraapp.yorabackend.receipt
+package de.yoraapp.yorabackend.messaging
 
-import de.yoraapp.yorabackend.messaging.ReceiptJobMessage
+import de.yoraapp.yorabackend.receipt.Receipt
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Service
 
