@@ -1,5 +1,6 @@
 package de.yoraapp.yorabackend
 
+import com.ninjasquad.springmockk.MockkBean
 import de.yoraapp.yorabackend.messaging.ReceiptJobPublisher
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -19,6 +20,7 @@ class YoraBackendApplicationTests {
 
     private lateinit var client: RestTestClient
 
+    @MockkBean
     val receiptJobPublisherMock = mockk<ReceiptJobPublisher>()
 
     @BeforeEach
