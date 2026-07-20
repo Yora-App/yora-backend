@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 import java.util.UUID
 
 @Service
@@ -27,7 +28,7 @@ class ReceiptService(private val db: ReceiptRepository, private val receiptJobPu
             status = ReceiptStatus.UPLOADED,
             contentType = file.contentType,
             filePath = destinationPath.toString(),
-            uploadedAt = Instant.now(),
+            uploadedAt = Instant.now().truncatedTo(ChronoUnit.MICROS), //PostgreSQL and H2 both only have microsecond precision
             s3StorageId = "placeholder",
         )
         val savedReceipt = db.save(receipt)
