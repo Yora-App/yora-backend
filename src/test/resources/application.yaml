@@ -6,7 +6,7 @@ spring:
       schema-locations: classpath:schema-h2.sql
       mode: always
   datasource:
-    url: "jdbc:h2:mem:testdb"
+    url: jdbc:h2:mem:testdb;DATABASE_TO_UPPER=false;CASE_INSENSITIVE_IDENTIFIERS=true
     username: username
     password: password
     driver-class-name: org.h2.Driver
