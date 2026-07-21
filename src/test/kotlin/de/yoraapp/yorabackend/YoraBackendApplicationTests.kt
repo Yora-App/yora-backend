@@ -17,6 +17,9 @@ import io.mockk.*
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.client.expectBody
+import org.springframework.web.bind.annotation.ResponseBody
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class YoraBackendApplicationTests{
@@ -75,5 +78,34 @@ class YoraBackendApplicationTests{
         verify(exactly = 1) {
             receiptJobPublisherMock.publish(dbReceipt)
         }
+    }
+
+    @Test
+    fun getReceiptsTest(){
+
+        val receipt = Receipt(
+            status = ReceiptStatus.UPLOADED,
+            contentType = MediaType.IMAGE_JPEG.toString(),
+            filePath = "test_path",
+            uploadedAt = Instant.now().truncatedTo(ChronoUnit.MICROS), //PostgreSQL and H2 both only have microsecond precision
+            s3StorageId = "placeholder",
+        )
+        receiptRepository.save(receipt)
+
+        val allReceipts : List<Receipt>? = client.get().uri("/receipts")
+            .exchange()
+            .expectStatus().isOk()
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody<List<Receipt>>()
+            .returnResult().getResponseBody()
+
+        // check that allReceipts contains one receipt
+        assertThat(allReceipts!!.size).isEqualTo(1)
+
+        // Check that the values of the returned receipt are equal to those of the receipt in the database
+        assertThat(allReceipts.first().status).isEqualTo(ReceiptStatus.UPLOADED)
+        assertThat(allReceipts.first().contentType).isEqualTo(MediaType.IMAGE_JPEG.toString())
+        assertThat(allReceipts.first().filePath).isEqualTo("test_path")
+        assertThat(allReceipts.first().s3StorageId).isEqualTo("placeholder")
     }
 }
