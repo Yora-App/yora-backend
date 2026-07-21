@@ -90,7 +90,7 @@ class YoraBackendApplicationTests{
             uploadedAt = Instant.now().truncatedTo(ChronoUnit.MICROS), //PostgreSQL and H2 both only have microsecond precision
             s3StorageId = "placeholder",
         )
-        receiptRepository.save(receipt)
+        val savedReceipt = receiptRepository.save(receipt)
 
         val allReceipts : List<Receipt>? = client.get().uri("/receipts")
             .exchange()
@@ -103,9 +103,6 @@ class YoraBackendApplicationTests{
         assertThat(allReceipts!!.size).isEqualTo(1)
 
         // Check that the values of the returned receipt are equal to those of the receipt in the database
-        assertThat(allReceipts.first().status).isEqualTo(ReceiptStatus.UPLOADED)
-        assertThat(allReceipts.first().contentType).isEqualTo(MediaType.IMAGE_JPEG.toString())
-        assertThat(allReceipts.first().filePath).isEqualTo("test_path")
-        assertThat(allReceipts.first().s3StorageId).isEqualTo("placeholder")
+        assertThat(allReceipts.first()).isEqualTo(savedReceipt)
     }
 }
