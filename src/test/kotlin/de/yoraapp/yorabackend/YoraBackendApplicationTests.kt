@@ -37,6 +37,9 @@ class YoraBackendApplicationTests{
     @BeforeEach
     fun setup() {
         client = RestTestClient.bindToServer().baseUrl("http://localhost:$port").build()
+
+        // Clear out the database before each test
+        receiptRepository.deleteAll()
     }
 
     @Test
