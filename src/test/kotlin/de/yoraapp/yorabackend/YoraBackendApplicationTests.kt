@@ -105,4 +105,27 @@ class YoraBackendApplicationTests{
         // Check that the values of the returned receipt are equal to those of the receipt in the database
         assertThat(allReceipts.first()).isEqualTo(savedReceipt)
     }
+
+    @Test
+    fun getReceiptByIdTest(){
+
+        val receipt = Receipt(
+            status = ReceiptStatus.UPLOADED,
+            contentType = MediaType.IMAGE_JPEG.toString(),
+            filePath = "test_path",
+            uploadedAt = Instant.now().truncatedTo(ChronoUnit.MICROS), //PostgreSQL and H2 both only have microsecond precision
+            s3StorageId = "placeholder",
+        )
+        val savedReceipt = receiptRepository.save(receipt)
+
+        val returnedReceipt: Receipt? = client.get().uri("/receipt/${savedReceipt.id}")
+            .exchange()
+            .expectStatus().isOk()
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody<Receipt>()
+            .returnResult().getResponseBody()
+
+        // Check that the values of the returned receipt are equal to those of the receipt in the database
+        assertThat(returnedReceipt).isEqualTo(savedReceipt)
+    }
 }
