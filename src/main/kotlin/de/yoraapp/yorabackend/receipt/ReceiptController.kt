@@ -13,7 +13,7 @@ import java.util.UUID
 
 @RestController
 class ReceiptController(private val receiptService: ReceiptService) {
-    @PostMapping("/receipt", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    @PostMapping("/receipts", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun uploadFile(@RequestParam uploadFile: MultipartFile): ResponseEntity<Any>{
 
         if(uploadFile.isEmpty){
@@ -31,6 +31,6 @@ class ReceiptController(private val receiptService: ReceiptService) {
     @GetMapping("/receipts")
     fun getReceipts() = receiptService.findAllReceipts()
 
-    @GetMapping("/receipt/{id}")
+    @GetMapping("/receipts/{id}")
     fun getReceiptById(@PathVariable id: UUID) = receiptService.findReceiptByID(id)
 }
