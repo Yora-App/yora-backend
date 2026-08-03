@@ -59,7 +59,7 @@ class YoraBackendApplicationTests{
         ).filename("test.jpg")
         .contentType(MediaType.IMAGE_JPEG)
 
-        val returnedReceipt: Receipt? = client.post().uri("/receipt")
+        val returnedReceipt: Receipt? = client.post().uri("/receipts")
             .contentType(MediaType.MULTIPART_FORM_DATA)
             .body(multipart.build())
             .exchange()
@@ -121,7 +121,7 @@ class YoraBackendApplicationTests{
         )
         val savedReceipt = receiptRepository.save(receipt)
 
-        val returnedReceipt: Receipt? = client.get().uri("/receipt/${savedReceipt.id}")
+        val returnedReceipt: Receipt? = client.get().uri("/receipts/${savedReceipt.id}")
             .exchange()
             .expectStatus().isOk()
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
